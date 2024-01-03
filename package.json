@@ -1,0 +1,17 @@
+{
+  "name": "shoonya-js",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Shoonya JS SDK",
+  "repository": "git@github.com:sarvarrose/shoonya-js.git",
+  "author": "Sarvar Rose",
+  "license": "GPL-3.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ]
+}
