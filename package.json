@@ -6,13 +6,20 @@
   "repository": "git@github.com:sarvarrose/shoonya-js.git",
   "author": "Sarvar Rose",
   "license": "GPL-3.0",
-  "main": "dist/index.js",
   "type": "module",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
     "LICENSE",
     "README.md"
+  ],
+  "keywords": [
+    "shoonya",
+    "shoonya-js",
+    "finvasia",
+    "javascript",
+    "typescript"
   ],
   "scripts": {
     "build": "tsc",
