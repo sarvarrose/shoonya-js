@@ -1,0 +1,14 @@
+{
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "moduleDetection": "force",
+    "allowJs": false,
+    "esModuleInterop": true,
+    "declaration": true,
+    "outDir": "dist",
+    "skipLibCheck": true
+  }
+}
