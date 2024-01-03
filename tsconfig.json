@@ -3,12 +3,15 @@
   "include": ["src/**/*"],
   "compilerOptions": {
     "target": "ES5",
+    "lib": ["ES2015", "DOM"],
     "module": "CommonJS",
     "moduleDetection": "force",
     "allowJs": false,
     "esModuleInterop": true,
     "declaration": true,
     "outDir": "dist",
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
     "skipLibCheck": true
   }
 }
