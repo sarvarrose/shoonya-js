@@ -1,6 +1,9 @@
 import ApiRequest from './ApiRequest'
 import sha256 from './utils'
 
+type ProductName = 'C' | 'M' | 'I' | 'B' | 'H'
+type Segment = 'CM' | 'FO' | 'FX'
+
 export default class Client {
   readonly #requestInstance: any
   /** authenticated user's ID */
@@ -72,8 +75,7 @@ export default class Client {
       appkey: sha256(`${this.userId}|${apiKey}`),
       imei: imei ?? 'api',
       factor2: factor2 || undefined,
-      dpin: !factor2 && pin ? sha256(pin) : undefined,
-      ipaddr: '' // TODO
+      dpin: !factor2 && pin ? sha256(pin) : undefined
     }
 
     // TODO: set types
@@ -120,6 +122,60 @@ export default class Client {
     }
 
     const data = await this.#requestInstance.post('setPin', payload)
+
+    return data
+  }
+
+  /**
+   * @description Get user's holdings
+   * @param {string} [productName=C] - Product name
+   */
+  async getHoldings(productName?: ProductName): Promise<any> {
+    const payload = {
+      uid: this.userId,
+      actid: this.accountId,
+      prd: productName ?? 'C'
+    }
+
+    const data = await this.#requestInstance.post('holdings', payload)
+
+    return data
+  }
+
+  /**
+   * @description Get user's limits
+   * @param {string} [productName] - Product name
+   * @param {string} [segment] - Segment
+   * @param {string} [exchange] - Exchange
+   */
+  async getLimits(
+    productName?: ProductName,
+    segment?: Segment,
+    exchange?: string
+  ): Promise<any> {
+    const payload = {
+      uid: this.userId,
+      actid: this.accountId,
+      prd: productName || undefined,
+      seg: segment || undefined,
+      exch: exchange || undefined
+    }
+
+    const data = await this.#requestInstance.post('limits', payload)
+
+    return data
+  }
+
+  /**
+   * @description Get user's positions
+   */
+  async getPositions(): Promise<any> {
+    const payload = {
+      uid: this.userId,
+      actid: this.accountId
+    }
+
+    const data = await this.#requestInstance.post('positions', payload)
 
     return data
   }
