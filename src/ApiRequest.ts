@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import routes from './routes.json'
 
 /**
@@ -18,19 +18,28 @@ export default class ApiRequest {
 
     this.requestInstance = axios.create({ baseURL: ApiRequest.baseURL })
 
-    // this.requestInstance.interceptors.request.use(
-    //   (request: AxiosRequestConfig) => {
-    //     if (this.debug) {
-    //       console.info(request)
-    //     }
-    //     return request
-    //   }
-    // )
+    this.requestInstance.interceptors.request.use(
+      (request: AxiosRequestConfig) => {
+        if (this.debug) {
+          console.info('Request: ', {
+            url: request.url,
+            method: request.method,
+            data: request.data
+          })
+        }
+
+        return request
+      }
+    )
 
     this.requestInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         if (this.debug) {
-          console.info(response.data)
+          console.info('Response: ', {
+            url: response.config.url,
+            method: response.config.method,
+            data: response.data
+          })
         }
 
         return response.data
