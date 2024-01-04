@@ -81,8 +81,8 @@ export default class Client {
     // TODO: set types
     const data = await this.#requestInstance.post(url, payload)
 
-    if (data.stat === 'Not_Ok' || !data.susertoken) {
-      throw new Error(data.emsg || 'Login attempt failed')
+    if (!data.susertoken) {
+      throw new Error(data.emsg ?? 'Login attempt failed')
     }
 
     this.#setAccessToken(data.susertoken)
@@ -176,6 +176,34 @@ export default class Client {
     }
 
     const data = await this.#requestInstance.post('positions', payload)
+
+    return data
+  }
+
+  /**
+   * @description Get user's max payout amount
+   */
+  async getMaxPayoutAmount(): Promise<any> {
+    const payload = {
+      uid: this.userId,
+      actid: this.accountId
+    }
+
+    const data = await this.#requestInstance.post('maxPayoutAmount', payload)
+
+    return data
+  }
+
+  async getUnSettledTradingDate(): Promise<any> {
+    const payload = {
+      uid: this.userId,
+      actid: this.accountId
+    }
+
+    const data = await this.#requestInstance.post(
+      'unSettledTradingDate',
+      payload
+    )
 
     return data
   }

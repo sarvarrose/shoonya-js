@@ -21,11 +21,11 @@ export default class ApiRequest {
     this.requestInstance.interceptors.request.use(
       (request: AxiosRequestConfig) => {
         if (this.debug) {
-          console.info('\nRequest: ', {
-            url: request.url,
-            method: request.method,
-            data: request.data
-          })
+          // console.info('\nRequest: ', {
+          //   url: request.url,
+          //   method: request.method,
+          //   data: request.data
+          // })
         }
 
         return request
@@ -40,6 +40,12 @@ export default class ApiRequest {
             method: response.config.method,
             data: response.data
           })
+        }
+
+        if ('stat' in response.data && response.data.stat === 'Not_Ok') {
+          throw new Error(
+            response.data?.emsg ?? response.data?.message ?? 'Unknown error'
+          )
         }
 
         return response.data
