@@ -21,7 +21,7 @@ export default class ApiRequest {
     this.requestInstance.interceptors.request.use(
       (request: AxiosRequestConfig) => {
         if (this.debug) {
-          console.info('Request: ', {
+          console.info('\nRequest: ', {
             url: request.url,
             method: request.method,
             data: request.data
@@ -60,7 +60,7 @@ export default class ApiRequest {
   ): Promise<AxiosResponse<any, any>> {
     // compose payload
     let payload = 'jData=' + JSON.stringify(params)
-    if (this.accessToken !== '') {
+    if (this.accessToken) {
       payload = payload + `&jKey=${this.accessToken}`
     }
 

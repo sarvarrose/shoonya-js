@@ -62,7 +62,7 @@ export default class Client {
       throw new Error('Either factor2 or pin is required')
     }
 
-    const url = pin ? 'pinAuth' : 'login'
+    const url = !factor2 && pin ? 'pinAuth' : 'login'
     const payload = {
       source: 'API',
       apkversion: 'js:1.0.0',
@@ -71,8 +71,9 @@ export default class Client {
       vc: vendorCode,
       appkey: sha256(`${this.userId}|${apiKey}`),
       imei: imei ?? 'api',
-      factor2: pin ? undefined : factor2,
-      dpin: pin ? sha256(pin) : undefined
+      factor2: factor2 || undefined,
+      dpin: !factor2 && pin ? sha256(pin) : undefined,
+      ipaddr: '' // TODO
     }
 
     // TODO: set types
@@ -84,6 +85,10 @@ export default class Client {
 
     this.#setAccessToken(data.susertoken)
     this.#setUserId(data.actid)
+
+    if (factor2 && pin) {
+      await this.setPin(pin, imei)
+    }
 
     return data
   }
@@ -97,7 +102,24 @@ export default class Client {
     }
 
     const data = await this.#requestInstance.post('logout', payload)
-    const data = await this.requestInstance.post('logout', payload)
+
+    return data
+  }
+
+  /**
+   * @description Set account PIN to allow authenticating using PIN instead of 2FA
+   * @param {string} pin - PIN
+   * @param {string} [imei=api] - IMEI of the mobile / MAC address of the desktop
+   */
+  async setPin(pin: string, imei?: string): Promise<any> {
+    const payload = {
+      source: 'API',
+      uid: this.userId,
+      dpin: pin,
+      imei: imei ?? 'api'
+    }
+
+    const data = await this.#requestInstance.post('setPin', payload)
 
     return data
   }
