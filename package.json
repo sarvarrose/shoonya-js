@@ -1,7 +1,7 @@
 {
   "name": "shoonya-js",
   "private": false,
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Shoonya JS SDK",
   "repository": "git@github.com:sarvarrose/shoonya-js.git",
   "author": "Sarvar Rose",
