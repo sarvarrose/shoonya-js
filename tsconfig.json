@@ -2,13 +2,17 @@
   "exclude": ["node_modules", "dist"],
   "include": ["src/**/*"],
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
+    "lib": ["ES2016", "DOM"],
     "module": "CommonJS",
     "moduleDetection": "force",
     "allowJs": false,
     "esModuleInterop": true,
     "declaration": true,
     "outDir": "dist",
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true
   }
 }
